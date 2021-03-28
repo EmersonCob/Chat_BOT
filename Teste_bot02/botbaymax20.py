@@ -1,8 +1,6 @@
 import logging
 
-from instbd import retornoInst
-from contratobd import retornoMed
-from medbd import retornoCont
+
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
