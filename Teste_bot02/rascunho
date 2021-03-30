@@ -1,0 +1,117 @@
+
+
+STATE3 = 3
+STATE4 = 4
+
+def entradaInstalacao(update, context):
+    try:
+        username = update.message.from_user.username
+        firstName = update.message.from_user.first_name
+        lastName = update.message.from_user.last_name
+        message = "Olá, "+ firstName + " " + lastName + "!" + " \n\nInforme o número da instalação."
+        update.message.reply_text(message, reply_markup=ReplyKeyboardMarkup([], one_time_keyboard=True)) 
+        return STATE3
+    except Exception as e:
+        print(str(e))
+
+
+def inputInstalacao(update, context):
+    instalacao = update.message.text
+    username = update.message.from_user.username
+    firstName = update.message.from_user.first_name
+    lastName = update.message.from_user.last_name
+    print(instalacao)
+    if len(instalacao) < 6:
+        message = f"""{firstName} {lastName}!\n\nNúmero da instalação está incorreta. 
+                        \nPor gentileza informe o número correto."""
+        context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+        return STATE3
+    else:
+        messagebd = saidaFinal
+        message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
+        context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+        return ConversationHandler.END
+
+
+def inputInstalacao2(update, context):
+    instalacao = update.message.text
+    username = update.message.from_user.username
+    firstName = update.message.from_user.first_name
+    lastName = update.message.from_user.last_name
+    messagebd = saidaFinal
+    message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
+    context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+    return ConversationHandler.END
+
+def cancel(update, context):
+    return ConversationHandler.END
+
+
+STATE5 = 5
+STATE6 = 6
+
+
+def entradaMedidor(update, context):
+    try:
+        username = update.message.from_user.username
+        firstName = update.message.from_user.first_name
+        lastName = update.message.from_user.last_name
+        message = "Olá, "+ firstName + " " + lastName + "!" + " \n\nInforme o número do Medidor."
+        update.message.reply_text(message, reply_markup=ReplyKeyboardMarkup([], one_time_keyboard=True)) 
+        return STATE5
+    except Exception as e:
+        print(str(e))
+
+
+def inputMedidor(update, context):
+    medidor = update.message.text
+    username = update.message.from_user.username
+    firstName = update.message.from_user.first_name
+    lastName = update.message.from_user.last_name
+    print(medidor)
+    if len(medidor) < 5:                                                
+        message = f"""{firstName} {lastName}!\n\nO número do medidor está incorreto. 
+                        \nPor gentileza informe o número correto."""
+        context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+        return STATE5
+    else:
+        messagebd = saidaFinal
+        message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
+        context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+        return ConversationHandler.END
+
+
+def inputMedidor2(update, context):
+    medidor = update.message.text
+    username = update.message.from_user.username
+    firstName = update.message.from_user.first_name
+    lastName = update.message.from_user.last_name
+    messagebd = saidaFinal
+    message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
+    context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+    return ConversationHandler.END
+
+def cancel(update, context):
+    return ConversationHandler.END
+
+################################################################
+
+
+
+    conversation_handler = ConversationHandler(
+        entry_points=[CommandHandler('medidor', entradaMedidor)],
+        states={
+            STATE5: [MessageHandler(Filters.text, inputMedidor)],
+            STATE6: [MessageHandler(Filters.text, inputMedidor2)]
+        },
+        fallbacks=[CommandHandler('cancel', cancel)])
+    updater.dispatcher.add_handler(conversation_handler)  
+
+    conversation_handler = ConversationHandler(
+        entry_points=[CommandHandler('instalacao', entradaInstalacao)],
+        states={
+            STATE3: [MessageHandler(Filters.text, inputInstalacao)],
+            STATE4: [MessageHandler(Filters.text, inputInstalacao2)]
+        },
+        fallbacks=[CommandHandler('cancel', cancel)])
+    updater.dispatcher.add_handler(conversation_handler)  

@@ -1,0 +1,125 @@
+###########################################################################################
+################################## BANCO DE DADOS #########################################
+###########################################################################################
+
+########## Criar Conexão com BD e a tabela
+
+########## Criar Conexão com BD e a tabela
+
+########## Realizar Consultas - Por Conta Contrato
+
+
+def ConexaoBanco():
+    caminho = "C:\\Projetos_JEB\\BD_Leitura\\BD_Leitura.db" # caminho do banco - "C:\\Projetos_JEB\\BD_Leitura\\BD_Leitura.db"
+    con = None
+
+    try:
+        con=sqlite3.connect(caminho)
+    except Error as ex:
+        print(ex)
+    return con
+
+vcon=ConexaoBanco()   
+
+def consultaContrato(conexao,sql):
+    c=conexao.cursor()
+    c.execute(sql)
+    resultado=c.fetchall()
+    return resultado
+
+entradaCont = contacontrato
+
+def resultadoCont():
+    vsql= f"SELECT * FROM BD_Leitura WHERE contrato = {entradaCont}" #interpolação para entrada do usuario
+    res=consultaContrato(vcon,vsql)   
+    if res:
+        for r in [res]:
+            for retorno  in r:
+                resultado = retorno
+                return(resultado)
+    else:
+        return (f"Número invalido ou não localizado!")#.vcon.close()
+    
+
+
+#saidaFinal = resultadoCont()
+
+vcon.close()
+
+
+########## Realizar Consultas - Por Instalação
+
+def ConexaoBanco():
+    caminho = "C:\\Projetos_JEB\\BD_Leitura\\BD_Leitura.db" # caminho do banco - "C:\\Projetos_JEB\\BD_Leitura\\BD_Leitura.db"
+    con = None
+
+    try:
+        con=sqlite3.connect(caminho)
+    except Error as ex:
+        print(ex)
+    return con
+
+vcon=ConexaoBanco()   
+
+def consultaInstalacao(conexao,sql):
+    c=conexao.cursor()
+    c.execute(sql)
+    resultado=c.fetchall()
+    return resultado
+
+entradaInst = 475452
+
+def resultadoInst():
+    vsql= f"SELECT * FROM BD_Leitura WHERE instalacao = {entradaInst}" #interpolação para entrada do usuario
+    res=consultaInstalacao(vcon,vsql)   
+    if res:
+        for r in [res]:
+            for retorno  in r:
+                resultado = retorno
+                return(resultado)
+    else:
+        return (f"Número invalido ou não localizado!")
+    
+
+saidaFinal = resultadoInst()
+
+vcon.close()
+
+
+########## Realizar Consultas - Por Medidor
+
+def ConexaoBanco():
+    caminho = "C:\\Projetos_JEB\\BD_Leitura\\BD_Leitura.db" # caminho do banco - "C:\\Projetos_JEB\\BD_Leitura\\BD_Leitura.db"
+    con = None
+
+    try:
+        con=sqlite3.connect(caminho)
+    except Error as ex:
+        print(ex)
+    return con
+
+vcon=ConexaoBanco()   
+
+def consultaMedidor(conexao,sql):
+    c=conexao.cursor()
+    c.execute(sql)
+    resultado=c.fetchall()
+    return resultado
+
+entradaMed = "W78170"
+
+def resultadoMed():
+    vsql= f"SELECT * FROM BD_Leitura WHERE medidor LIKE '%{entradaMed}%'" #interpolação para entrada do usuario
+    res=consultaMedidor(vcon,vsql)   
+    if res:
+        for r in [res]:
+            for retorno  in r:
+                resultado = retorno
+                return(resultado)
+    else:
+        return (f"Número invalido ou não localizado!")
+    
+
+saidaFinal = resultadoMed()
+
+vcon.close()
