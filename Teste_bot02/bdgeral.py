@@ -1,8 +1,6 @@
 import sqlite3
 
-#from botbaymaxV3 import 
 from sqlite3 import Error
-
 
 ###########################################################################################
 ################################## BANCO DE DADOS #########################################
@@ -30,7 +28,7 @@ def consultaContrato(conexao,sql):
     resultado=c.fetchall()
     return resultado
 
-entradaCont = 2089890015
+entradaCont = contacontrato
 
 def resultadoCont():
     vsql= f"SELECT * FROM BD_Leitura WHERE contrato = {entradaCont}" #interpolação para entrada do usuario
