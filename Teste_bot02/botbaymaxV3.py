@@ -1,5 +1,8 @@
 import logging
 import requests
+
+from bdgeral import saidaFinal
+
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
                           RegexHandler, ConversationHandler, CallbackQueryHandler)
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
@@ -43,13 +46,15 @@ def inputContrato(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
         return STATE1
     else:
-        message = "Segue conforme solicitado: " +  "Ajudo em algo mais?"
+        messagebd = saidaFinal
+        message = f"Segue conforme solicitado: {messagebd}. \n\nAjudo em algo mais?"
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
         return ConversationHandler.END
 
 def inputContrato2(update, context):
     contacontrato = update.message.text
-    message = "Segue conforme solicitado: " + "Ajudo em algo mais?"
+    messagebd = saidaFinal
+    message = f"Segue conforme solicitado: {messagebd}. \n\nAjudo em algo mais?"
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
     return ConversationHandler.END
 
@@ -59,16 +64,6 @@ def cancel(update, context):
 
 #def entradaContato(update: Update, context: CallbackContext) -> None:
 #    update.message.reply_text("Informe o número da instalação! \n\nEx.: /instalacao 1234567")
-
-#def entradaViz(update: Update, context: CallbackContext) -> None:
-#    update.message.reply_text("Informe o número da instalação! \n\nEx.: /instalacao 1234567")
-
-#def entradaKML(update: Update, context: CallbackContext) -> None:
-#    update.message.reply_text("Informe o número da MRU! \n\nEx.: /mru 01128101")
-
-#def entradaImg(update: Update, context: CallbackContext) -> None:
-#    update.message.reply_text(update.message.text)
-  
 
 ###########################################################################################
 ################################ BOT ######################################################
@@ -102,10 +97,6 @@ def main() -> None:
     #dispatcher.add_handler(CommandHandler("instalacao", entradaInst))
     #dispatcher.add_handler(CommandHandler("medidor", entradaMed))
     #dispatcher.add_handler(CommandHandler("contrato", entradaContrato))
-    #dispatcher.add_handler(CommandHandler("contato", entradaContato))
-    #dispatcher.add_handler(CommandHandler("vizinhos", entradaViz))
-    #dispatcher.add_handler(CommandHandler("kml", entradaKML))
-    #dispatcher.add_handler(CommandHandler("imagem", entradaImg))
 
     #updater.dispatcher.add_handler(CommandHandler('start', welcome))
 

@@ -1,5 +1,6 @@
 import sqlite3
 
+#from botbaymaxV3 import 
 from sqlite3 import Error
 
 
@@ -38,13 +39,13 @@ def resultadoCont():
         for r in [res]:
             for retorno  in r:
                 resultado = {retorno}
-                print(resultado)
+                return(resultado)
     else:
-        prints (f"\nNúmero invalido ou não localizado!\n")
+        return (f"\nNúmero invalido ou não localizado!\n")
     
 
-def saidaDados():
-    print(resultadoCont())
+
+saidaFinal = resultadoCont()
 
 vcon.close()
 
