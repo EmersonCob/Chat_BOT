@@ -20,16 +20,6 @@ from threading import Thread, Lock
 #def entradaInst(update: Update, context: CallbackContext) -> None:
 #    update.message.reply_text("Informe o número da instalação! \n\nEx.: /instalacao 1234567")
 
-def versao(update, context):
-    contacontrato = update.message.text
-    username = update.message.from_user.username
-    firstName = update.message.from_user.first_name
-    lastName = update.message.from_user.last_name
-    print(contacontrato)
-    message = f"Olá {firstName} {lastName}!\n\nAtualmente estou na versão 5.0!\n\n Comandos ativos para consulta: \n * /star; \n * /contrato; \n * /instalacao; \n * /medidor."
-    context.bot.send_message(chat_id=update.effective_chat.id, text=message)
- 
-
 STATE1 = 1
 STATE2 = 2
 
@@ -148,8 +138,6 @@ def main() -> None:
 
     updater.dispatcher.add_handler(CommandHandler('start', start))
 
-    updater.dispatcher.add_handler(CommandHandler('versao', versao))
-
     conversation_handler = ConversationHandler(
         entry_points=[CommandHandler('contrato', entradaContrato)],
         states={
@@ -157,7 +145,7 @@ def main() -> None:
             STATE2: [MessageHandler(Filters.text, inputContrato2)]
         },
         fallbacks=[CommandHandler('cancelar', cancel)])
-    updater.dispatcher.add_handler(conversation_handler)  
+    updater.dispatcher.add_handler(conversation_handler)    
 
     # on noncommand i.e message - echo the message on Telegram
     #dispatcher.add_handler(MessageHandler(consultaInstalacao().retornoInst))
