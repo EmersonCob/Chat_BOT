@@ -57,7 +57,6 @@ def inputContrato(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
         return STATE2
     else:
-        time.sleep(50)
         messagebd = saidaFinal
         message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)

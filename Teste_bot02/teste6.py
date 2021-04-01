@@ -19,11 +19,11 @@ from threading import Thread, Lock
 class TelegramBot:
     def __init__(self):
         token = '1757548140:AAGqdAGKSoIDJLCIB_NxuQM1TSpKO1RkG94'
-        url_base = f'https://api.telegram.org/bot{token}'
+        self.url_base = f'https://api.telegram.org/bot{token}'
     
     # Iniciar o bot
     def Iniciar(self):
-        Update_id = None
+        update_id = None
         while True:
             atualizacao = self.obter_mensagens(update_id)
             mensagens = atualizacao['result']
@@ -39,7 +39,7 @@ class TelegramBot:
         if update_id:
             link_requisicao = f'{link_requisicao}&offset={update_id + 1}'
         resultado = requests.get(link_requisicao)
-        return json(resultado.content)    
+        return json.loads(resultado.content)    
     # Criar uma resposta
     def criar_resposta(self):
         return 'Olá, bem vindo ao nosso bot!'
