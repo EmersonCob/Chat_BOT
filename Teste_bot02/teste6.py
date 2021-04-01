@@ -1,6 +1,7 @@
 import logging
 import requests
-
+import time
+import json
 import sqlite3
 
 from sqlite3 import Error
@@ -15,20 +16,71 @@ from threading import Thread, Lock
 
 ###################################### BOT ################################################
 
-########## Entrada do usuario
+class TelegramBot:
+    def __init__(self):
+        token = '1757548140:AAGqdAGKSoIDJLCIB_NxuQM1TSpKO1RkG94'
+        url_base = f'https://api.telegram.org/bot{token}'
+    
+    # Iniciar o bot
+    def Iniciar(self):
+        Update_id = None
+        while True:
+            atualizacao = self.obter_mensagens(update_id)
+            mensagens = atualizacao['result']
+            if mensagens:
+                for mensagem in mensagens:
+                    update_id = mensagem['update_id']
+                    chat_id = mensagem['message']['from']['id']
+                    resposta = self.criar_resposta()
+                    self.responder(resposta,chat_id)
+    # Obter mensagens
+    def obter_mensagens(self, update_id):
+        link_requisicao = f'{self.url_base}getUpdates?timeout=100'
+        if update_id:
+            link_requisicao = f'{link_requisicao}&offset={update_id + 1}'
+        resultado = requests.get(link_requisicao)
+        return json(resultado.content)    
+    # Criar uma resposta
+    def criar_resposta(self):
+        return 'Olá, bem vindo ao nosso bot!'
 
-#def entradaInst(update: Update, context: CallbackContext) -> None:
-#    update.message.reply_text("Informe o número da instalação! \n\nEx.: /instalacao 1234567")
+    # Responder 
+    def responder(self, resposta, chat_id):
+        #enviar
+        link_de_envio = f'{self.url_base}sendMessage?chat_id={chat_id}&text={resposta}'
+        requests.get(link_de_envio)
 
-def versao(update, context):
-    contacontrato = update.message.text
-    username = update.message.from_user.username
-    firstName = update.message.from_user.first_name
-    lastName = update.message.from_user.last_name
-    print(contacontrato)
-    message = f"Olá {firstName} {lastName}!\n\nAtualmente estou na versão 5.0!\n\n Comandos ativos para consulta: \n \n * /contrato; \n * /instalacao; \n * /medidor."
-    context.bot.send_message(chat_id=update.effective_chat.id, text=message)
- 
+bot = TelegramBot()
+bot.Iniciar()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 
 STATE1 = 1
 STATE2 = 2
@@ -57,7 +109,6 @@ def inputContrato(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
         return STATE2
     else:
-        time.sleep(50)
         messagebd = saidaFinal
         message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
@@ -149,8 +200,6 @@ def main() -> None:
 
     updater.dispatcher.add_handler(CommandHandler('start', start))
 
-    updater.dispatcher.add_handler(CommandHandler('versao', versao))
-
     conversation_handler = ConversationHandler(
         entry_points=[CommandHandler('contrato', entradaContrato)],
         states={
@@ -158,7 +207,7 @@ def main() -> None:
             STATE2: [MessageHandler(Filters.text, inputContrato2)]
         },
         fallbacks=[CommandHandler('cancelar', cancel)])
-    updater.dispatcher.add_handler(conversation_handler)  
+    updater.dispatcher.add_handler(conversation_handler)    
 
     # on noncommand i.e message - echo the message on Telegram
     #dispatcher.add_handler(MessageHandler(consultaInstalacao().retornoInst))
@@ -172,3 +221,5 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+
+    '''
