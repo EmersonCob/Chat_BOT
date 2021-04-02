@@ -50,17 +50,20 @@ def inputContrato(update, context):
     username = update.message.from_user.username
     firstName = update.message.from_user.first_name
     lastName = update.message.from_user.last_name
+    contacontrat_01 = contacontrato
     print(contacontrato)
     if len(contacontrato) < 10:
         message = f"""{firstName} {lastName}!\n\nO número da conta contrato está incorreto. 
                         \nPor gentileza informe o número correto."""
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
-        return STATE2
+        return STATE1
     else:
-        messagebd = saidaFinal
-        message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
-        context.bot.send_message(chat_id=update.effective_chat.id, text=message)
-        return ConversationHandler.END
+        #messagebd = saidaFinal
+        #message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
+        #context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+        return contacontrat_01, STATE2
+        #return ConversationHandler.END
+
 
 
 def inputContrato2(update, context):
