@@ -2,13 +2,11 @@ import sqlite3
 
 from sqlite3 import Error
 
-###########################################################################################
-################################## BANCO DE DADOS #########################################
-###########################################################################################
 
-########## Criar Conexão com BD e a tabela
+#from botbaymaxV3 import inputContrato
 
-########## Realizar Consultas - Por Conta Contrato
+
+# BANCO DE DADOS 
 
 def ConexaoBanco():
     caminho = "C:\\Projetos_JEB\\BD_Leitura\\BD_Leitura.db" # caminho do banco - "C:\\Projetos_JEB\\BD_Leitura\\BD_Leitura.db"
@@ -28,7 +26,9 @@ def consultaContrato(conexao,sql):
     resultado=c.fetchall()
     return resultado
 
-entradaCont = contacontrato
+# Realizar Consultas - Por Conta Contrato
+
+entradaCont = 2089890015 #getNota # falta uma solução para a entrada 
 
 def resultadoCont():
     vsql= f"SELECT * FROM BD_Leitura WHERE contrato = {entradaCont}" #interpolação para entrada do usuario
@@ -36,17 +36,12 @@ def resultadoCont():
     if res:
         for r in [res]:
             for retorno  in r:
-                resultado = {retorno}
-                return(resultado)
+                resultado = retorno
+                return(resultado)            
     else:
-        return (f"\nNúmero invalido ou não localizado!\n")
-    
-
+        return (f"Número invalido ou não localizado!")
+        
 
 saidaFinal = resultadoCont()
 
-vcon.close()
-
-###########################################################################################################   
-###########################################################################################################   
-########################################################################################################### 
+ConexaoBanco.close()
