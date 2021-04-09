@@ -46,39 +46,28 @@ def inputContrato(update, context):
     contacontrato = update.message.text
     firstName = update.message.from_user.first_name
     lastName = update.message.from_user.last_name
-    #print(contacontrato)
+    print(contacontrato)
     if len(contacontrato) < 10:
         message = f"""{firstName} {lastName}!\n\nO número da conta contrato está incorreto. 
                         \nPor gentileza informe o número correto."""
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
-        return STATE1
+        return STATE2
     else:
-        #message = (input("Informe o contrato: "))
-        #context.bot.send_message(chat_id=update.effective_chat.id, text=message)
-        entrada = contacontrato
-        vsql= f"SELECT * FROM BD_Leitura WHERE contrato = {entrada}" #interpolação para entrada do usuario
-        res=consultaContrato(vcon,vsql)   
-        if res:
-            for r in [res]:
-                for retorno  in r:
-                    resultado = retorno
-                    #return(resultado)            
-        else:
-            resultado = "Número invalido ou não localizado!"
-            #return (f"Número invalido ou não localizado!")
+        firstName = update.message.from_user.first_name
+        lastName = update.message.from_user.last_name
+        saidaFinal = resultadoCont()
         messagebd = resultado
         message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
-        #print(f'teste1{luta}')
         #return entrada, STATE2
         return ConversationHandler.END
 
 
 def inputContrato2(update, context):
     #contacontrato = update.message.text
-    saidaFinal = resultadoCont()
     firstName = update.message.from_user.first_name
     lastName = update.message.from_user.last_name
+    saidaFinal = resultadoCont()
     messagebd = saidaFinal
     message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
@@ -109,11 +98,10 @@ def consultaContrato(conexao,sql):
     return resultado
 
 # Realizar Consultas - Por Conta Contrato
-'''
-entradaCont = 2089890015 #getNota # falta uma solução para a entrada 
+
+#entradaCont = 2089890015 #getNota # falta uma solução para a entrada 
 
 def resultadoCont():
-    #entradaCont = inputContrato
     vsql= f"SELECT * FROM BD_Leitura WHERE contrato = {entradaCont}" #interpolação para entrada do usuario
     res=consultaContrato(vcon,vsql)   
     if res:
@@ -126,7 +114,7 @@ def resultadoCont():
         
 
 #saidaFinal = resultadoCont()
-'''
+
 
 # Verifica se tem mensagem nova
 
