@@ -55,8 +55,8 @@ def inputContrato(update, context):
     else:
         firstName = update.message.from_user.first_name
         lastName = update.message.from_user.last_name
-        saidaFinal = resultadoCont()
-        messagebd = resultado
+        #saidaFinal = resultadoCont()
+        messagebd = saidaFinal
         message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
         context.bot.send_message(chat_id=update.effective_chat.id, text=message)
         #return entrada, STATE2
@@ -67,7 +67,7 @@ def inputContrato2(update, context):
     #contacontrato = update.message.text
     firstName = update.message.from_user.first_name
     lastName = update.message.from_user.last_name
-    saidaFinal = resultadoCont()
+    #saidaFinal = resultadoCont()
     messagebd = saidaFinal
     message = f"{firstName} {lastName}, segue conforme solicitado:\n\n {messagebd} \n\nAjudo em algo mais?"
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
@@ -99,7 +99,7 @@ def consultaContrato(conexao,sql):
 
 # Realizar Consultas - Por Conta Contrato
 
-#entradaCont = 2089890015 #getNota # falta uma solução para a entrada 
+entradaCont = 2089890015 #getNota # falta uma solução para a entrada 
 
 def resultadoCont():
     vsql= f"SELECT * FROM BD_Leitura WHERE contrato = {entradaCont}" #interpolação para entrada do usuario
@@ -113,7 +113,7 @@ def resultadoCont():
         return (f"Número invalido ou não localizado!")
         
 
-#saidaFinal = resultadoCont()
+saidaFinal = resultadoCont()
 
 
 # Verifica se tem mensagem nova
