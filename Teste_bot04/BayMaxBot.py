@@ -1,16 +1,101 @@
 import logging
+import json
 import requests
 
 import sqlite3
 from sqlite3 import Error
 
-from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
-                          RegexHandler, ConversationHandler, CallbackQueryHandler)
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
-from telegram import Update
 from time import sleep
 from threading import Thread, Lock
 
+
+global config
+config = {'url': 'https://api.telegram.org/bot1757548140:AAHXc-gyKWwiN4NMrnj340wz84CxpanJ2XY/', 'lock': Lock()}
+
+
+def del_update(data):
+    global config
+
+    #print('Deletando menssagem id ' + str(data['update_id']))
+
+    config['lock'].acquire()
+    requests.post(config['url'] + 'getUpdates', {'offset': data['update_id']+1})
+    config['lock'].release()
+
+def send_message(data, msg):
+    global config
+
+    config['lock'].acquire()
+    requests.post(config['url'] + 'sendMessage', {'chat_id': data['message']['chat']['id'], 'text': str(msg)})
+    config['lock'].release()
+
+
+'''
+def versao(data, msg): # Versão
+    global config
+
+    contacontrato = data.message.text
+    firstName = data.message.from_user.first_name
+    lastName = data.message.from_user.last_name
+    print(contacontrato)
+    message = f"Olá {firstName} {lastName}!\n\nAtualmente estou na versão 5.5!\n\n Comandos ativos para consulta: \n \n * /contrato; \n * /instalacao; \n * /medidor."
+    context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+'''
+
+while True:
+
+    while True:
+        try:
+            x = json.loads(requests.get(config['url'] + 'getUpdates').text)
+            break
+        
+        except Exception as e:
+            x = {'result':[]}
+            if 'Failed to establish a new connection' in str (e):
+                print('Perca de conexão')
+            else:
+                print('Erro desconhecido: ' + str(e))
+
+    if len(x['result']) > 0:
+        for data in x['result']:
+            Thread(target=del_update, args=(data,)).start()
+
+            print(json.dumps (data, indent=1))
+            if data['message']['text'] == 'oi':
+                Thread(target=send_message, args=(data, 'Olá, tudo bem?')).start()
+
+        sleep(1.5)    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 ###################################### BOT ################################################
 
 # Versão
@@ -166,4 +251,5 @@ def main() -> None:
     updater.idle()
 
 if __name__ == '__main__':
-    main()
+    main() 
+'''
